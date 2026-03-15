@@ -6,7 +6,7 @@
 3. 5025241107 - Muhammad Zahran Rizki Primanda
 4. 5025241162 - Felix Aldorino
 
-# Introduction
+# Bayes' theorem Introduction
 
 Bayes' theorem  is used to determine the conditional probability of an event when another event has already occurred.  
 
