@@ -1,6 +1,6 @@
 # NaiveBayes-ProbStat-W3
 
-## Kelompok 10
+# Kelompok 10
 1. 5025241058 - Addien Zafriyan Al Akhsan
 2. 5025241104 - Raden Kurniawan Agung Fitrianto
 3. 5025241107 - Muhammad Zahran Rizki Primanda
@@ -53,7 +53,129 @@ The dataset used for this implementation is sourced from [Kaggle](https://www.ka
 
 Though many of the tweets seems to be discussing about a real disaster or tragedy unfolding, some of them might have been a product of fearmongering or hyperbole and as a result might not depict any real incident happening in the world and instead be of people over exxagerating certain aspects that happen in life to the internet to get clicks and views.  
 
-That is why, using the Bayes Theorem to calculate the probability of events from the data being actual real disasters or not
+That is why, using the Bayes Theorem to calculate the probability of events from the data being actual real disasters or not.
+
+The structure of the dataset itself is as follows:
+
+| id | keyword | location | text | target |
+| --- | --- | --- | --- | --- |
+| A unique identifier for each tweet | A particular keyword from the tweet | The location the tweet was sent from (may be blank) | The text of the tweet | Denotes whether a tweet is about a real disaster (1) or not (0) |
+
+For our program, we only use the text column (with some cleaning) as features and target column as label.
+
+# Code Explanation
+
+#### Importing Libraries
+```
+import pandas as pd
+import re
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import confusion_matrix, accuracy_score
+```
+#### Load dataset into a table variable called df
+```
+df = pd.read_csv('tweets.csv')
+```
+
+#### Function to strip out URLs that don’t help the model understand sentiment and converts everything to lowercase
+```
+def clean_text(text):
+    text = re.sub(r'https?://\S+|www\.\S+', '', text)
+    return text.lower()
+```
+
+#### Handle NULL value in the text column
+```
+df['text'] = df['text'].fillna('')
+```
+
+#### Clean the text by inputting the text column into the clean_text function and creating a new column called clean_text to store the cleaned text
+```
+df['clean_text'] = df['text'].apply(clean_text)
+```
+
+#### X is the cleaned text and y is the target variable (0 or 1) indicating whether the tweet is about a real disaster or not
+```
+X = df['clean_text']
+y = df['target']
+```
+
+#### Split the data into training and testing sets (80% train, 20% test)
+```
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
+
+#### Counts how many times every unique word appears in every tweet and removes common English stop words
+```
+vectorizer = CountVectorizer(stop_words='english')
+```
+
+#### Transforms the text data into a matrix of token counts for both training and testing sets
+```
+X_train_vec = vectorizer.fit_transform(X_train)
+X_test_vec = vectorizer.transform(X_test)
+```
+
+#### Define the Multinomial Naive Bayes classifier
+```
+nb_classifier = MultinomialNB()
+```
+
+#### Fit the model to the training data
+```
+nb_classifier.fit(X_train_vec, y_train)
+```
+
+#### Predict the target variable for the test set
+```
+y_pred = nb_classifier.predict(X_test_vec)
+```
+
+#### Evaluate the model's performance by calculating the accuracy and displaying the confusion matrix
+```
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.2%}")
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+```
+
+### Predicting New Data
+#### Define new tweets to classify
+```
+new_tweets = [
+    "Emergency services are on the scene of a massive multi-car pileup on I-95.",
+    "That concert last night was total chaos, my heart is literally on fire!",
+    "Fire fighters are battling a blaze that has engulfed a residential building downtown.",
+    "Earthquake of magnitude 6.5 strikes near the coast, causing widespread damage and panic.",
+    "Flooding in my kitchen right now, send help!",
+    "fire damage panic public explosion disaster emergency nuclear bomb blast tsunami earthquake hurricane tornado wildfire",
+]
+```
+
+#### Transform the text into the same format as the training data
+```
+new_samples_vec = vectorizer.transform(new_tweets)
+```
+
+#### Predict the target (0 or 1)
+```
+predictions = nb_classifier.predict(new_samples_vec)
+```
+
+#### Get the confidence scores
+```
+probabilities = nb_classifier.predict_proba(new_samples_vec)
+```
+
+#### Display results
+```
+for tweet, pred, prob in zip(new_tweets, predictions, probabilities):
+    label = "Real Disaster" if pred == 1 else "Not a Disaster"
+    confidence = prob[pred] * 100
+    print(f"Tweet: {tweet}")
+    print(f"Prediction: {label} ({confidence:.2f}% confidence)\n")
+```
 
 # Naive Bayes Execution Evalution
 
