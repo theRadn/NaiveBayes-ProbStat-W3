@@ -55,17 +55,17 @@ That is why, using the Bayes Theorem to calculate the probability of events from
 
 # Naive Bayes Execution Evalution
 
-Based on the execution of Naive Bayes algorithme on the dataset, we have arrive with 89.40% accurancy regarding the classification of the probability of events from the data being actual real disasters or not
-Example: 
-Tweet: Emergency services are on the scene of a massive multi-car pileup on I-95.
-Prediction: Real Disaster (99.70% confidence)
-Tweet: That concert last night was total chaos, my heart is literally on fire!
-Prediction: Not a Disaster (99.91% confidence)
-Tweet: Fire fighters are battling a blaze that has engulfed a residential building downtown.
-Prediction: Real Disaster (80.69% confidence)
-Tweet: Earthquake of magnitude 6.5 strikes near the coast, causing widespread damage and panic.
-Prediction: Real Disaster (99.38% confidence)
-Tweet: Flooding in my kitchen right now, send help!
-Prediction: Not a Disaster (98.14% confidence)
+Based on the execution of Naive Bayes algorithme on the dataset, we have arrive with 89.40% accurancy regarding the classification of the probability of events from the data being actual real disasters or not  
+Example:   
+Tweet: Emergency services are on the scene of a massive multi-car pileup on I-95.   
+Prediction: Real Disaster (99.70% confidence)  
+Tweet: That concert last night was total chaos, my heart is literally on fire!  
+Prediction: Not a Disaster (99.91% confidence)  
+Tweet: Fire fighters are battling a blaze that has engulfed a residential building downtown.  
+Prediction: Real Disaster (80.69% confidence)  
+Tweet: Earthquake of magnitude 6.5 strikes near the coast, causing widespread damage and panic.  
+Prediction: Real Disaster (99.38% confidence)  
+Tweet: Flooding in my kitchen right now, send help!  
+Prediction: Not a Disaster (98.14% confidence)  
 
 Based on the results, we conclude that the algorithm achieves a very high level of correct classification for real disasters. Although some classifications have lower confidence levels, they still produce the correct results. The algorithm is also able to effectively distinguish between major real disasters and event that are accidents but not a disaster with remarkably high confidence.
