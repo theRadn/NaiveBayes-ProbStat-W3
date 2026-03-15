@@ -6,7 +6,7 @@
 3. 5025241107 - Muhammad Zahran Rizki Primanda
 4. 5025241162 - Felix Aldorino
 
-# Bayes Theorem Introduction
+# Introduction
 
 Bayes' theorem  is used to determine the conditional probability of an event when another event has already occurred.  
 
@@ -19,6 +19,8 @@ When we know:
 how often B happens given that A happens, written P(B|A)  
 how likely A is on its own, written P(A)  
 how likely B is on its own, written P(B)  
+
+#  Bayes' theorem on Naive Bayes
 
 Naive Bayes methods are a set of supervised learning algorithms based on applying Bayes’ theorem with the “naive” assumption of conditional independence between every pair of features given the value of the class variable.   
 
