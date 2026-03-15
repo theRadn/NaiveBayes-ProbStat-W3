@@ -177,6 +177,69 @@ for tweet, pred, prob in zip(new_tweets, predictions, probabilities):
     print(f"Prediction: {label} ({confidence:.2f}% confidence)\n")
 ```
 
+# Small Calculation Example
+
+Data that are used for example calculation
+| text | target |
+| --- | --- |
+| Telangana: Section 144 has been imposed in Bhainsa from January 13 to 15, after clash erupted between two groups on January 12. | 1 |
+| Arsonist sets cars ablaze at dealership | 1 |
+| "Lord Jesus, your love brings freedom and pardon. Fill me with your Holy Spirit and set my heart ablaze with your love | 0 |
+
+Word Matrix
+| Doc | 12 | 13 | 144 | 15 | ablaze | arsonist | bhainsa | brings | cars | clash | dealership | erupted | freedom | groups | heart | holy | imposed | january | jesus | lord | love | pardon | section | set | sets | spirit | telangana |
+| --- | -- | -- | --- | -- | ------ | -------- | ------- | ------ | ---- | ----- | ---------- | ------- | ------- | ------ | ----- | ---- | ------- | ------- | ----- | ---- | ---- | ------ | ------- | --- | ---- | ------ | --------- |
+| 1   | 1  | 1  | 1   | 1  | 0      | 0        | 1       | 0      | 0    | 1     | 0          | 1       | 0       | 1      | 0     | 0    | 1       | 2       | 0     | 0    | 0    | 0      | 1       | 0   | 0    | 0      | 1         |
+| 2   | 0  | 0  | 0   | 0  | 1      | 1        | 0       | 0      | 1    | 0     | 1          | 0       | 0       | 0      | 0     | 0    | 0       | 0       | 0     | 0    | 0    | 0      | 0       | 1   | 0    | 0      | 0         |
+| 3   | 0  | 0  | 0   | 0  | 1      | 0        | 0       | 1      | 0    | 0     | 0          | 0       | 1       | 0      | 1     | 1    | 0       | 0       | 1     | 1    | 2    | 1      | 0       | 1   | 0    | 1      | 0         |
+
+* Vocabulary Size (V): 27
+* Class 0 (Not Disaster) Total Words: 12.0
+* Class 1 (Real Disaster) Total Words: 18.0
+
+Example new tweet
+```
+Arsonist heart ablaze
+```
+
+#### Formula
+$$P(\text{word} | \text{class}) = \frac{\text{count of word in class} + 1}{\text{total words in class} + V}$$​
+
+#### Word: "Arsonist"
+
+* Not Disaster: $\frac{0 + 1}{12 + 27} \approx 0.0256$
+* Disaster: $\frac{1 + 1}{18 + 27} \approx 0.0444$
+
+#### Word: "Heart"
+
+* Not Disaster: $\frac{1 + 1}{12 + 27} \approx 0.0513$
+* Disaster: $\frac{0 + 1}{18 + 27} \approx 0.0222$
+
+#### Word: "Ablaze"
+
+* Not Disaster: $\frac{1 + 1}{12 + 27} \approx 0.0513$
+* Disaster: $\frac{1 + 1}{18 + 27} \approx 0.0444$
+
+#### Final Probability
+
+$$Score_{\text{dis}} = P(\text{Disaster}) \times P(\text{arsonist}|\text{dis}) \times P(\text{heart}|\text{dis}) \times P(\text{ablaze}|\text{dis})$$
+
+$$0.6667 \times 0.0444 \times 0.0222 \times 0.0444 \approx \mathbf{0.00002919}$$
+
+$$Score_{\text{not}} = P(\text{Not Disaster}) \times P(\text{arsonist}|\text{not}) \times P(\text{heart}|\text{not}) \times P(\text{ablaze}|\text{not})$$
+
+$$0.3333 \times 0.0256 \times 0.0513 \times 0.0513 \approx \mathbf{0.00002246}$$
+
+**Normalization**
+* Total Sum: $0.00002919 + 0.00002246 = 0.00005165$
+* Final Disaster Prob: $0.00002919 / 0.00005165 \approx \mathbf{0.5651}$ (56.5%)
+* Final Not Disaster Prob: $0.00002246 / 0.00005165 \approx \mathbf{0.4349}$ (43.5%)
+
+**Final Answer**
+* Probability (Disaster): 56.56%
+* Probability (Not Disaster): 43.44%
+* Classification: Real Disaster
+
 # Naive Bayes Execution Evalution
 
 Based on the execution of Naive Bayes algorithme on the dataset, we have arrive with 89.40% accurancy regarding the classification of the probability of events from the data being actual real disasters or not  
