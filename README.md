@@ -52,3 +52,5 @@ The dataset used for this implementation is sourced from [Kaggle](https://www.ka
 Though many of the tweets seems to be discussing about a real disaster or tragedy unfolding, some of them might have been a product of fearmongering or hyperbole and as a result might not depict any real incident happening in the world and instead be of people over exxagerating certain aspects that happen in life to the internet to get clicks and views.  
 
 That is why, using Bayes Theorem we will calculate the probability of such events being actual disasters or not
+
+# Naive Bayes Execution Evalution
