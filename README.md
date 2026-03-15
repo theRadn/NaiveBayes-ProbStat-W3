@@ -6,6 +6,8 @@
 3. 5025241107 - Muhammad Zahran Rizki Primanda
 4. 5025241162 - Felix Aldorino
 
+# Bayes Theorem Introduction
+
 Bayes' theorem  is used to determine the conditional probability of an event when another event has already occurred.  
 
 The Formula is:  
@@ -43,3 +45,10 @@ By multiplying these individual stats against the total number of emails, we can
 
 In conclusion, this method is called "naive" because it simplistically assumes that every feature or word is completely independent and does not influence any other, even   though keywords are often related in real life. Despite this "naive" and theoretically flawed assumption, the algorithm remains highly popular because it is incredibly   fast, computationally efficient, and remarkably accurate for large-scale text classification tasks like spam filtering and sentiment analysis.  
 
+# DATASET
+
+The dataset used for this implementation is sourced from [Kaggle](https://www.kaggle.com/datasets/vstepanenko/disaster-tweets/data) which presents a collection of tweets from January 14th 2020 associated with disaster keywords like “crash”, “quarantine”, and “bush fires” as well as the location and keyword itself.  
+
+Though many of the tweets seems to be discussing about a real disaster or tragedy unfolding, some of them might have been a product of fearmongering or hyperbole and as a result might not depict any real incident happening in the world and instead be of people over exxagerating certain aspects that happen in life to the internet to get clicks and views.  
+
+That is why, using Bayes Theorem we will calculate the probability of such events being actual disasters or not
